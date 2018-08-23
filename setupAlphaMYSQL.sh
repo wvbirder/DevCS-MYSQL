@@ -1,5 +1,11 @@
 #!/bin/sh
 #
-mysql -uroot -p`grep 'temporary password' /var/log/mysqld.log | awk -e '{ print $11 }'` --connect-expired-password
+sudo systemctl stop mysqld
+sudo sed -i.bak "\$askip-grant-tables" /etc/my.cnf
+sudo systemctl start mysqld
+mysql -uroot < changeRootPWD.sql
+sudo sed -i.bak "\$d" /etc/my.cnf
+sudo systemctl stop mysqld
+sudo systemctl start mysqld
 mysql -uroot -pAlpha2018_ < createUserAlpha.sql
 mysql -ualpha -pAlpha2018_ < createProducts.sql
