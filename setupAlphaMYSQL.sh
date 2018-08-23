@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-sudo setenforce Permissive
+sudo setenforce 0
 sudo systemctl stop mysqld
 sudo sed -i.bak "\$askip-grant-tables" /etc/my.cnf
 sudo systemctl start mysqld
